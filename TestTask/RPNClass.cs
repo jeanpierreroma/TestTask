@@ -10,10 +10,28 @@ namespace TestTask
     {
         private readonly Dictionary<string, IBinaryOperationAction> _operators;
 
+        public delegate void CellHelper(string token, List<string> numbers, Stack<string> operators);
+
+        private readonly Dictionary<string, CellHelper> _cellHelpers;
+
+
         public RPNClass(IEnumerable<IBinaryOperationAction> operators)
         {
             _operators = operators.ToDictionary(op => op.Operator);
+
+            _cellHelpers = new Dictionary<string, CellHelper>
+            {
+                { "number", CellHelpers.NumberHelper},
+                { "(", CellHelpers.LeftBracketHelper },
+                { ")", CellHelpers.RightBracketHelper }
+            };
+
+            foreach (var op in _operators.Keys)
+            {
+                _cellHelpers[op] = (cell, numbers, currectOperator) => CellHelpers.OperatorHelper(cell, numbers, currectOperator, _operators);
+            }
         }
+
         public List<string> ConvertIntoRPNExpression(List<string> cells)
         {
             List<string> numbers = new List<string>();
@@ -23,29 +41,11 @@ namespace TestTask
             {
                 if (int.TryParse(item, out _))
                 {
-                    numbers.Add(item);
-                }
-                else if (item.Equals("("))
-                {
-                    operators.Push(item);
-                }
-                else if (item.Equals(")"))
-                {
-                    while (!operators.Peek().Equals("("))
-                    {
-                        numbers.Add(operators.Pop());
-                    }
-                    operators.Pop();
+                    _cellHelpers["number"](item, numbers, operators);
                 }
                 else
                 {
-                    while (operators.Count > 0 
-                        && _operators.ContainsKey(operators.Peek())
-                        && _operators[operators.Peek()].Priority >= _operators[item].Priority)
-                    {
-                        numbers.Add(operators.Pop());
-                    }
-                    operators.Push(item);
+                    _cellHelpers[item](item, numbers, operators);
                 }
             }
 
@@ -69,9 +69,9 @@ namespace TestTask
                 }
                 else
                 {
-                    int b = numbers.Pop();
-                    int a = numbers.Pop();
-                    numbers.Push(_operators[element].Apply(a, b));
+                    int num2 = numbers.Pop();
+                    int num1 = numbers.Pop();
+                    numbers.Push(_operators[element].Apply(num1, num2));
                 }
             }
 

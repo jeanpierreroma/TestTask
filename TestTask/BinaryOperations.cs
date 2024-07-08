@@ -12,7 +12,7 @@ namespace TestTask
 
         public int Priority => 1;
 
-        public int Apply(int a, int b) => a + b;
+        public int Apply(int num1, int num2) => num1 + num2;
     }
 
     public class SubtractOperation : IBinaryOperationAction
@@ -21,7 +21,7 @@ namespace TestTask
 
         public int Priority => 1;
 
-        public int Apply(int a, int b) => a - b;
+        public int Apply(int num1, int num2) => num1 - num2;
     }
 
     public class MultiplyOperation : IBinaryOperationAction
@@ -30,21 +30,21 @@ namespace TestTask
 
         public int Priority => 2;
 
-        public int Apply(int a, int b) => a * b;
+        public int Apply(int num1, int num2) => num1 * num2;
     }
 
     public class DivideOperation : IBinaryOperationAction
     { 
         public string Operator => "/";
         public int Priority => 2;
-        public int Apply(int a, int b)
+        public int Apply(int num1, int num2)
         {
-            if (b == 0)
+            if (num2 == 0)
             {
                 throw new DivideByZeroException();
             }
 
-            return a / b;
+            return num1 / num2;
         }
     }
 }

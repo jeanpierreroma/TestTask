@@ -10,6 +10,6 @@ namespace TestTask
     {
         string Operator { get; }
         int Priority { get; }
-        int Apply(int a, int b);
+        int Apply(int num1, int num2);
     }
 }
