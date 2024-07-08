@@ -12,11 +12,22 @@ namespace TestTask
         {
             string f = "3+5*(10-5)+50-(5*20-10)";
 
-            StringHelper stringHelper = new StringHelper(f);
+            var subString = StringHelper.DivideIntoSubStrings(f);
 
-            var r = stringHelper.ResolveExample();
+            var operatorsList = new List<IBinaryOperationAction>
+            {
+                new AddOperation(),
+                new SubtractOperation(),
+                new MultiplyOperation(),
+                new DivideOperation(),
+            };
 
-            Console.WriteLine(r);
+            RPNClass rpnClass = new RPNClass(operatorsList);
+            var rpnExpression = rpnClass.ConvertIntoRPNExpression(subString);
+            var result = rpnClass.ExecuteRPN(rpnExpression);
+
+
+            Console.WriteLine(result);
         }        
     }
 }
