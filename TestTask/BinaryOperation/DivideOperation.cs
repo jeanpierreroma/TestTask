@@ -11,7 +11,7 @@ namespace TestTask.NewFolder1
         public char Operator => '/';
         public OperationPriority Priority => OperationPriority.MediumPriority;
 
-        public Func<int, int, int> Apply => (value1, value2) =>
+        public Func<float, float, float> Apply => (value1, value2) =>
         {
             if (value2 == 0)
             {

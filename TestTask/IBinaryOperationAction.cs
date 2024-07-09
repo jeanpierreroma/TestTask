@@ -10,6 +10,6 @@ namespace TestTask
     {
         char Operator { get; }
         OperationPriority Priority { get; }
-        Func<int, int, int> Apply { get; }
+        Func<float, float, float> Apply { get; }
     }
 }

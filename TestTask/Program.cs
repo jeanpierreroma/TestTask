@@ -11,7 +11,7 @@ namespace TestTask
     {
         static void Main(string[] args)
         {
-            string f = "3+5*(10-5)+50-(5*20-10)";
+            string f = "3.5+5*(10-5)+50-(5*20-10)";
 
             var subString = StringHelper.DivideIntoSubStrings(f);
 

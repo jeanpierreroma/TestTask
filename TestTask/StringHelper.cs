@@ -15,7 +15,7 @@ namespace TestTask
 
             foreach (char c in expression)
             {
-                if (char.IsDigit(c))
+                if (char.IsDigit(c) || c == '.')
                 {
                     number.Append(c);
                 }

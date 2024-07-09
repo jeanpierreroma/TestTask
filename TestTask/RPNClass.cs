@@ -39,7 +39,7 @@ namespace TestTask
 
             foreach (var item in cells)
             {
-                if (int.TryParse(item, out _))
+                if (float.TryParse(item, out _))
                 {
                     _cellHelpers["number"](item, numbers, operators);
                 }
@@ -57,20 +57,20 @@ namespace TestTask
             return numbers;
         }
 
-        public int ExecuteRPN(List<string> rpnExpression)
+        public float ExecuteRPN(List<string> rpnExpression)
         {
-            Stack<int> numbers = new Stack<int>();
+            Stack<float> numbers = new Stack<float>();
             
             foreach (string element in rpnExpression)
             {
-                if (int.TryParse(element, out int number))
+                if (float.TryParse(element, out float number))
                 {
                     numbers.Push(number);
                 }
                 else
                 {
-                    int num2 = numbers.Pop();
-                    int num1 = numbers.Pop();
+                    float num2 = numbers.Pop();
+                    float num1 = numbers.Pop();
                     numbers.Push(_operators[char.Parse(element)].Apply(num1, num2));
                 }
             }

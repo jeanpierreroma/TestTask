@@ -12,6 +12,6 @@ namespace TestTask.NewFolder1
 
         public OperationPriority Priority => OperationPriority.MediumPriority;
 
-        public Func<int, int, int> Apply => (value1, value2) => value1 * value2;
+        public Func<float, float, float> Apply => (value1, value2) => value1 * value2;
     }
 }
