@@ -8,8 +8,8 @@ namespace TestTask
 {
     public interface IBinaryOperationAction
     {
-        string Operator { get; }
-        int Priority { get; }
-        int Apply(int num1, int num2);
+        char Operator { get; }
+        OperationPriority Priority { get; }
+        Func<int, int, int> Apply { get; }
     }
 }

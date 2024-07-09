@@ -8,34 +8,34 @@ namespace TestTask
 {
     public static class CellHelpers
     {
-        public static void NumberHelper(string cell, List<string> numbers, Stack<string> operators)
+        public static void HandleNumber(string cell, List<string> outputList, Stack<string> operatorStack)
         {
-            numbers.Add(cell);
+            outputList.Add(cell);
         }
 
-        public static void LeftBracketHelper(string cell, List<string> numbers, Stack<string> operators)
+        public static void HandleLeftBracket(string cell, List<string> outputList, Stack<string> operatorStack)
         {
-            operators.Push(cell);
+            operatorStack.Push(cell);
         }
 
-        public static void RightBracketHelper(string cell, List<string> numbers, Stack<string> operators)
+        public static void HandleRightBracket(string cell, List<string> outputList, Stack<string> operatorStack)
         {
-            while (!operators.Peek().Equals("("))
+            while (!operatorStack.Peek().Equals("("))
             {
-                numbers.Add(operators.Pop());
+                outputList.Add(operatorStack.Pop());
             }
-            operators.Pop();
+            operatorStack.Pop();
         }
 
-        public static void OperatorHelper(string cell, List<string> numbers, Stack<string> operators, Dictionary<string, IBinaryOperationAction> _operators)
+        public static void HandleOperator(char cell, List<string> outputList, Stack<string> operatorStack, Dictionary<char, IBinaryOperationAction> _operators)
         {
-            while (operators.Count > 0
-                        && _operators.ContainsKey(operators.Peek())
-                        && _operators[operators.Peek()].Priority >= _operators[cell].Priority)
+            while (operatorStack.Count > 0
+                        && _operators.ContainsKey(char.Parse(operatorStack.Peek()))
+                        && _operators[char.Parse(operatorStack.Peek())].Priority >= _operators[cell].Priority)
             {
-                numbers.Add(operators.Pop());
+                outputList.Add(operatorStack.Pop());
             }
-            operators.Push(cell);
+            operatorStack.Push(cell.ToString());
         }
     }
 }

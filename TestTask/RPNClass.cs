@@ -8,27 +8,27 @@ namespace TestTask
 {
     public class RPNClass
     {
-        private readonly Dictionary<string, IBinaryOperationAction> _operators;
+        private readonly Dictionary<char, IBinaryOperationAction> _operators;
 
-        public delegate void CellHelper(string token, List<string> numbers, Stack<string> operators);
+        public delegate void CellHelper(string cell, List<string> numbers, Stack<string> operators);
 
         private readonly Dictionary<string, CellHelper> _cellHelpers;
 
 
-        public RPNClass(IEnumerable<IBinaryOperationAction> operators)
+        public RPNClass(List<IBinaryOperationAction> operators)
         {
             _operators = operators.ToDictionary(op => op.Operator);
 
             _cellHelpers = new Dictionary<string, CellHelper>
             {
-                { "number", CellHelpers.NumberHelper},
-                { "(", CellHelpers.LeftBracketHelper },
-                { ")", CellHelpers.RightBracketHelper }
+                { "number", CellHelpers.HandleNumber},
+                { "(", CellHelpers.HandleLeftBracket },
+                { ")", CellHelpers.HandleRightBracket }
             };
 
             foreach (var op in _operators.Keys)
             {
-                _cellHelpers[op] = (cell, numbers, currectOperator) => CellHelpers.OperatorHelper(cell, numbers, currectOperator, _operators);
+                _cellHelpers[op.ToString()] = (cell, numbers, currectOperator) => CellHelpers.HandleOperator(char.Parse(cell), numbers, currectOperator, _operators);
             }
         }
 
@@ -71,7 +71,7 @@ namespace TestTask
                 {
                     int num2 = numbers.Pop();
                     int num1 = numbers.Pop();
-                    numbers.Push(_operators[element].Apply(num1, num2));
+                    numbers.Push(_operators[char.Parse(element)].Apply(num1, num2));
                 }
             }
 

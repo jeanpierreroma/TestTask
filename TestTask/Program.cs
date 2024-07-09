@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestTask.NewFolder1;
 
 namespace TestTask
 {
@@ -28,6 +29,7 @@ namespace TestTask
 
 
             Console.WriteLine(result);
+            Console.ReadLine();
         }        
     }
 }

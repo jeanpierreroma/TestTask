@@ -43,9 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryOperations.cs" />
     <Compile Include="CellHelpers.cs" />
     <Compile Include="IBinaryOperationAction.cs" />
+    <Compile Include="BinaryOperation\AddOperation.cs" />
+    <Compile Include="BinaryOperation\DivideOperation.cs" />
+    <Compile Include="BinaryOperation\MultiplyOperation.cs" />
+    <Compile Include="BinaryOperation\SubtractOperation.cs" />
+    <Compile Include="OperationPriority.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RPNClass.cs" />
