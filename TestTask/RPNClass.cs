@@ -7,14 +7,14 @@ using TestTask.BraketAction;
 
 namespace TestTask
 {
-    public class RPNClass
+    public class RpnClass
     {
         private readonly Dictionary<char, IBinaryOperationAction> _operators;
 
         private readonly Dictionary<char, IExpressionAction> _expressionActions;
 
 
-        public RPNClass(List<IBinaryOperationAction> operators)
+        public RpnClass(List<IBinaryOperationAction> operators)
         {
             _operators = operators.ToDictionary(op => op.Operator);
 
@@ -26,30 +26,30 @@ namespace TestTask
             };
         }
 
-        public List<string> ConvertIntoRPNExpression(List<string> cells)
+        public List<string> ConvertIntoRPNExpression(List<string> expressions)
         {
             List<string> outputList = new List<string>();
-            Stack<string> operators = new Stack<string>();
+            Stack<string> operatorStack = new Stack<string>();
 
-            foreach (var item in cells)
+            foreach (var item in expressions)
             {
                 if (float.TryParse(item, out _))
                 {
-                    _expressionActions['\0'].Action(item, outputList, operators);
+                    _expressionActions['\0'].Action(item, outputList, operatorStack);
                 }
                 else if (_expressionActions.ContainsKey(char.Parse(item)))
                 {
-                    _expressionActions[char.Parse(item)].Action(item, outputList, operators);
+                    _expressionActions[char.Parse(item)].Action(item, outputList, operatorStack);
                 }
                 else
                 {
-                    ExpressionHandler.HandleOperator(char.Parse(item), outputList, operators, _operators);
+                    ExpressionHandler.HandleOperator(char.Parse(item), outputList, operatorStack, _operators);
                 }
             }
 
-            while (operators.Count > 0)
+            while (operatorStack.Count > 0)
             {
-                outputList.Add(operators.Pop());
+                outputList.Add(operatorStack.Pop());
             }
 
             return outputList;
@@ -67,9 +67,9 @@ namespace TestTask
                 }
                 else
                 {
-                    float num2 = outputList.Pop();
-                    float num1 = outputList.Pop();
-                    outputList.Push(_operators[char.Parse(element)].Apply(num1, num2));
+                    float value2 = outputList.Pop();
+                    float value1 = outputList.Pop();
+                    outputList.Push(_operators[char.Parse(element)].Apply(value1, value2));
                 }
             }
 
