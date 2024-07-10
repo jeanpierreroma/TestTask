@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpressionAction\LeftBracketAction.cs" />
+    <Compile Include="ExpressionAction\NumberAction.cs" />
+    <Compile Include="ExpressionAction\RightBracketAction.cs" />
+    <Compile Include="IExpressionAction.cs" />
     <Compile Include="ExpressionHandler.cs" />
     <Compile Include="IBinaryOperationAction.cs" />
     <Compile Include="BinaryOperation\AddOperation.cs" />

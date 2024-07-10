@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestTask.BraketAction;
 
 namespace TestTask
 {
@@ -10,72 +11,69 @@ namespace TestTask
     {
         private readonly Dictionary<char, IBinaryOperationAction> _operators;
 
-        public delegate void CellHelper(string cell, List<string> numbers, Stack<string> operators);
-
-        private readonly Dictionary<string, CellHelper> _cellHelpers;
+        private readonly Dictionary<char, IExpressionAction> _expressionActions;
 
 
         public RPNClass(List<IBinaryOperationAction> operators)
         {
             _operators = operators.ToDictionary(op => op.Operator);
 
-            _cellHelpers = new Dictionary<string, CellHelper>
+            _expressionActions = new Dictionary<char, IExpressionAction>
             {
-                { "number", ExpressionHandler.HandleNumber},
-                { "(", ExpressionHandler.HandleLeftBracket },
-                { ")", ExpressionHandler.HandleRightBracket }
+                { '\0', new NumberAction() },
+                { '(', new LeftBracketAction() },
+                { ')', new RightBracketAction() }
             };
-
-            foreach (var op in _operators.Keys)
-            {
-                _cellHelpers[op.ToString()] = (cell, numbers, currectOperator) => ExpressionHandler.HandleOperator(char.Parse(cell), numbers, currectOperator, _operators);
-            }
         }
 
         public List<string> ConvertIntoRPNExpression(List<string> cells)
         {
-            List<string> numbers = new List<string>();
+            List<string> outputList = new List<string>();
             Stack<string> operators = new Stack<string>();
 
             foreach (var item in cells)
             {
                 if (float.TryParse(item, out _))
                 {
-                    _cellHelpers["number"](item, numbers, operators);
+                    _expressionActions['\0'].Action(item, outputList, operators);
+                }
+                else if (_expressionActions.ContainsKey(char.Parse(item)))
+                {
+                    _expressionActions[char.Parse(item)].Action(item, outputList, operators);
                 }
                 else
                 {
-                    _cellHelpers[item](item, numbers, operators);
+                    ExpressionHandler.HandleOperator(char.Parse(item), outputList, operators, _operators);
                 }
             }
 
             while (operators.Count > 0)
             {
-                numbers.Add(operators.Pop());
+                outputList.Add(operators.Pop());
             }
 
-            return numbers;
+            return outputList;
         }
 
         public float ExecuteRPN(List<string> rpnExpression)
         {
-            Stack<float> numbers = new Stack<float>();
+            Stack<float> outputList = new Stack<float>();
             
             foreach (string element in rpnExpression)
             {
                 if (float.TryParse(element, out float number))
                 {
-                    numbers.Push(number);
+                    outputList.Push(number);
                 }
                 else
                 {
-                    float num2 = numbers.Pop();
-                    float num1 = numbers.Pop();
-                    numbers.Push(_operators[char.Parse(element)].Apply(num1, num2));
+                    float num2 = outputList.Pop();
+                    float num1 = outputList.Pop();
+                    outputList.Push(_operators[char.Parse(element)].Apply(num1, num2));
                 }
             }
 
-            return numbers.Pop();
+            return outputList.Pop();
         }
     }
 }
