@@ -21,14 +21,14 @@ namespace TestTask
 
             _cellHelpers = new Dictionary<string, CellHelper>
             {
-                { "number", CellHelpers.HandleNumber},
-                { "(", CellHelpers.HandleLeftBracket },
-                { ")", CellHelpers.HandleRightBracket }
+                { "number", ExpressionHandler.HandleNumber},
+                { "(", ExpressionHandler.HandleLeftBracket },
+                { ")", ExpressionHandler.HandleRightBracket }
             };
 
             foreach (var op in _operators.Keys)
             {
-                _cellHelpers[op.ToString()] = (cell, numbers, currectOperator) => CellHelpers.HandleOperator(char.Parse(cell), numbers, currectOperator, _operators);
+                _cellHelpers[op.ToString()] = (cell, numbers, currectOperator) => ExpressionHandler.HandleOperator(char.Parse(cell), numbers, currectOperator, _operators);
             }
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestTask
 {
-    public static class CellHelpers
+    public static class ExpressionHandler
     {
         public static void HandleNumber(string cell, List<string> outputList, Stack<string> operatorStack)
         {

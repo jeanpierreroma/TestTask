@@ -9,7 +9,7 @@ namespace TestTask.NewFolder1
     public class DivideOperation : IBinaryOperationAction
     {
         public char Operator => '/';
-        public OperationPriority Priority => OperationPriority.MediumPriority;
+        public OperationPriority Priority => OperationPriority.Medium;
 
         public Func<float, float, float> Apply => (value1, value2) =>
         {

@@ -10,7 +10,7 @@ namespace TestTask.NewFolder1
     {
         public char Operator => '-';
 
-        public OperationPriority Priority => OperationPriority.LowPriority;
+        public OperationPriority Priority => OperationPriority.Low;
 
         public Func<float, float, float> Apply => (value1, value2) => value1 - value2;
     }

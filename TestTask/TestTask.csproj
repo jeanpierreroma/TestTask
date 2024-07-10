@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CellHelpers.cs" />
+    <Compile Include="ExpressionHandler.cs" />
     <Compile Include="IBinaryOperationAction.cs" />
     <Compile Include="BinaryOperation\AddOperation.cs" />
     <Compile Include="BinaryOperation\DivideOperation.cs" />

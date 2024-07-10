@@ -8,7 +8,8 @@ namespace TestTask
 {
     public enum OperationPriority
     {
-        LowPriority = 1,
-        MediumPriority = 2,
+        Low = 1,
+        Medium = 2,
+        High = 3,
     }
 }
